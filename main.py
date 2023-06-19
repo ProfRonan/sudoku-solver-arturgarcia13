@@ -25,6 +25,10 @@ def find_empty(board: list[list[int]]) -> tuple:
           return i, j
     return None, None
 
+def lista_de_elementos_repetidos(lista: list[int]) -> bool:
+    lista = [x for x in lista if x != 0]
+    return len(lista) != len(set(lista))
+
 def is_valid(board: list[list[int]]) -> bool:
     """Checks if the board is valid"""
     for linha in board:
