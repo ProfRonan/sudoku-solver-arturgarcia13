@@ -5,17 +5,23 @@ def solve_sudoku(board: list[list[int]]) -> list[list[int]]:
     # Procurar uma célula vazia
     i, j = find_empty(board)
     # Se nao houver célula vazia, sudoku resolvido
-    if i == None or j == None:
-      return board
+    if i is None or j is None:
+        return board
+
     # testa todos os valores que são possíveis
-    for valorTeste in range(1,10):
-      # substitui o valor vazio para teste
-      board[i][j] = valorTeste
-      # testa se é um opção válida
-      if check_board(board):
-        # executa novamente
-        solve_sudoku(board)
-      board[i][j] = 0
+    for valorTeste in range(1, 10):
+        # substitui o valor vazio para teste
+        board[i][j] = valorTeste
+        # testa se é uma opção válida
+        if check_board(board):
+            # executa novamente
+            solved_board = solve_sudoku(board)
+            if solved_board is not None:
+                return solved_board
+        board[i][j] = 0
+
+    return None
+
 
 
 def find_empty(board: list[list[int]]) -> tuple:
