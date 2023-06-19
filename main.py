@@ -6,14 +6,13 @@ def solve_sudoku(board: list[list[int]]) -> list[list[int]]:
     i, j = find_empty(board)
     # Se nao houver célula vazia, sudoku resolvido
     if i == None or j == None:
-      print(board)
       return board
     # testa todos os valores que são possíveis
     for valorTeste in range(1,10):
       # substitui o valor vazio para teste
       board[i][j] = valorTeste
       # testa se é um opção válida
-      if is_valid(board):
+      if check_board(board):
         # executa novamente
         solve_sudoku(board)
       board[i][j] = 0
@@ -27,6 +26,26 @@ def find_empty(board: list[list[int]]) -> tuple:
     return None, None
 
 def is_valid(board: list[list[int]]) -> bool:
+    """Checks if the board is valid"""
+    for linha in board:
+        # verifica se tem algum elemento repetido na linha
+        if lista_de_elementos_repetidos(linha):
+            return False
+            #raise ValueError('Sudoku impossível de resolver')
+        # verifica se o sudoku esta com algum elemento vazio
+        if len(linha) != 9:
+            return False
+            #raise ValueError('Sudoku impossível de resolver')
+    for j in range(len(board)):
+        # j é o índice da coluna
+        colunm = [linha[j] for linha in board]
+        # verifica se tem algum elemento repetido na coluna
+        if lista_de_elementos_repetidos(colunm):
+            return False
+            #raise ValueError('Sudoku impossível de resolver')
+    return True
+
+def check_board(board: list[list[int]]) -> bool:
     """Checks if the board is valid"""
     # para cada linha i do tabuleiro
     for i in range(9):
